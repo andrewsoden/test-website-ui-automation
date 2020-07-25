@@ -12,8 +12,10 @@ namespace Tests.Selenium
         [SetUp]
         public void TestSetup()
         {
-            driver = new ChromeDriver();
-            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.AddArguments("start-maximized", "incognito");
+            //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
+            driver = new ChromeDriver(chromeOptions);
             driver.Navigate().GoToUrl("https://andrewsoden.github.io/test-website/#/");
         }
 
