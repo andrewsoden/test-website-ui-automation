@@ -1,15 +1,23 @@
 ﻿using System;
 using NUnit.Framework;
-using HomePageMethods;
+using PageMethods.HomePageMethods;
 
 namespace Tests.Selenium
 {
-    public class HomePageTests : BaseClass
+    public class HomePageTests : BaseTest
     {
-        [Test]
-        public void FirstTest()
+        [SetUp]
+        public void loadHomePage()
         {
-            Console.WriteLine("First test");
+            HomePageMethods homePageDriver = new HomePageMethods(driver);
+            homePageDriver.navigateToHomePage();
+        }
+
+        [Test]
+        public void IsHomePageHeadingPresent()
+        {
+            HomePageMethods homePageDriver = new HomePageMethods(driver);
+            homePageDriver.isHomePageHeadingVisible();
         }
     }
 }

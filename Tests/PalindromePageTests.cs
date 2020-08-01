@@ -1,14 +1,23 @@
 ﻿using System;
 using NUnit.Framework;
+using PageMethods.PalindromePageMethods;
 
 namespace Tests.Selenium
 {
-    public class PalindromePageTests : BaseClass
+    public class PalindromePageTests : BaseTest
     {
-        [Test]
-        public void FirstTest()
+        [SetUp]
+        public void loadPalindromePage()
         {
-            Console.WriteLine("First test");
+            PalindromePageMethods palindromePageDriver = new PalindromePageMethods(driver);
+            palindromePageDriver.navigateToPalindromePage();
+        }
+
+        [Test]
+        public void IsPalindromePageHeadingPresent()
+        {
+            PalindromePageMethods palindromePageDriver = new PalindromePageMethods(driver);
+            palindromePageDriver.isPalindromePageHeadingVisible();
         }
     }
 }

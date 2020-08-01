@@ -5,7 +5,7 @@ using OpenQA.Selenium.Chrome;
 
 namespace Tests.Selenium
 {
-    public class BaseClass
+    public class BaseTest
     {
         public IWebDriver driver;
 
