@@ -1,5 +1,5 @@
+using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Interactions;
 using Shouldly;
@@ -137,7 +137,42 @@ namespace PageMethods.RegisterPageMethods
 
         public void clickClearForm()
         {
-            driver.FindElement(buttonClearForm).Click();
+            //driver.FindElement(buttonClearForm).Click();
+            var element = driver.FindElement(buttonClearForm);
+            Actions actions = new Actions(driver);
+            actions.MoveToElement(element).Click().Perform();
+        }
+
+        public bool isFieldEmpty(By element)
+        {
+            string variable = driver.FindElement(element).Text;
+
+            if (string.IsNullOrEmpty(variable))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void textFieldReset()
+        {
+            if (isFieldEmpty(textIdFullName)
+                && isFieldEmpty(textIdPhoneNumber)
+                && isFieldEmpty(textIdEmail)
+                && isFieldEmpty(textIdAddress1)
+                && isFieldEmpty(textIdAddress2)
+                && isFieldEmpty(textIdCity)
+                && isFieldEmpty(textIdZip))
+            {
+                Assert.Pass();
+            }
+            else
+            {
+                Assert.Fail("Register form was not sucessfully reset");
+            }
         }
     }
 }

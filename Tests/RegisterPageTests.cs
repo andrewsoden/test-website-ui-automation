@@ -1,7 +1,5 @@
 ﻿using NUnit.Framework;
 using PageMethods.RegisterPageMethods;
-using OpenQA.Selenium;
-using System;
 
 namespace Tests.Selenium
 {
@@ -21,21 +19,48 @@ namespace Tests.Selenium
             registerPageDriver.isRegisterPageHeadingVisible();
         }
 
-        [Test]
-        public void SuccessfullyRegisterUser()
+        [TestCase("Test", "0430200100", "test@test.com", "120 Very Long Street", "Unit 24b", "Brisbane", "WA", "4000", "Neither", true, TestName = "SuccessfullyRegisterWAPerson")]
+        [TestCase("Throwaway Name", "0431555888", "woof@bark.com.au", "52 Laneway Drive", "", "Hobart", "TAS", "4163", "Both", false, TestName = "SuccessfullyRegisterTASPerson")]
+        public void SuccessfullyRegisterUser(string fullName, string phoneNumber, string email,
+            string address1, string address2, string city, string state, string postcode, string petPreference,
+            bool coffeePreference)
         {
             RegisterPageMethods registerPageDriver = new RegisterPageMethods(driver);
             registerPageDriver.isRegisterPageHeadingVisible();
-            registerPageDriver.enterFullName("Test");
-            registerPageDriver.enterPhoneNumber("0430200100");
-            registerPageDriver.enterEmail("test@test.com");
-            registerPageDriver.enterAddress1("120 Very Long Street");
-            registerPageDriver.enterAddress2("Unit 24b");
-            registerPageDriver.enterCity("Brisbane");
-            registerPageDriver.enterState("WA");
-            registerPageDriver.enterZip("4000");
-            registerPageDriver.enterPetPreference("Neither");
-            registerPageDriver.enterCoffeePreference(true);
+            registerPageDriver.enterFullName(fullName);
+            registerPageDriver.enterPhoneNumber(phoneNumber);
+            registerPageDriver.enterEmail(email);
+            registerPageDriver.enterAddress1(address1);
+            registerPageDriver.enterAddress2(address2);
+            registerPageDriver.enterCity(city);
+            registerPageDriver.enterState(state);
+            registerPageDriver.enterZip(postcode);
+            registerPageDriver.enterPetPreference(petPreference);
+            registerPageDriver.enterCoffeePreference(coffeePreference);
+            registerPageDriver.clickSubmit();
+        }
+
+        [TestCase("Throwaway Name", "0431555888", "woof@bark.com.au", "52 Laneway Drive", "", "Hobart", "TAS", "4163", "Both", false, TestName = "ConfirmClearRemovesData")]
+        public void ClearButtonResetsForm(string fullName, string phoneNumber, string email,
+            string address1, string address2, string city, string state, string postcode, string petPreference,
+            bool coffeePreference)
+        {
+            RegisterPageMethods registerPageDriver = new RegisterPageMethods(driver);
+            registerPageDriver.isRegisterPageHeadingVisible();
+            registerPageDriver.enterFullName(fullName);
+            registerPageDriver.enterPhoneNumber(phoneNumber);
+            registerPageDriver.enterEmail(email);
+            registerPageDriver.enterAddress1(address1);
+            registerPageDriver.enterAddress2(address2);
+            registerPageDriver.enterCity(city);
+            registerPageDriver.enterState(state);
+            registerPageDriver.enterZip(postcode);
+            registerPageDriver.enterPetPreference(petPreference);
+            registerPageDriver.enterCoffeePreference(coffeePreference);
+            
+            // TODO - clear form button is broken
+            registerPageDriver.clickClearForm();
+            registerPageDriver.textFieldReset();
         }
     }
 }
